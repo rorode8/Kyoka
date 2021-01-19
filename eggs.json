@@ -1,0 +1,119 @@
+{
+	"eggs":{
+		"17":{
+			"name":"normal egg",
+			"hatch":12,
+			"description":"this egg will hatch a chao with unlucky odds",
+			"drops":
+			[
+				{
+					"name":"Normal Chao",
+					"petID": 1,
+					"weight": 75
+
+				},
+				{
+					"name": "Hero Chao",
+					"petID":2,
+					"weight":10
+				},
+				{
+					"name":"Dark Chao",
+					"petID":3,
+					"weight":10
+
+				},
+				{
+					"name":"Light Chao",
+					"petID":4,
+					"weight":5
+				}
+			]
+		},
+		"18": {
+			"name":"rare egg",
+			"hatch":8,
+			"description":"this egg will hatch a chat with lucky odds",
+			"drops":
+			[
+				{
+					"name":"Normal Chao",
+					"petID": 1,
+					"weight": 60
+
+				},
+				{
+					"name": "Hero Chao",
+					"petID":2,
+					"weight":12
+				},
+				{
+					"name":"Dark Chao",
+					"petID":3,
+					"weight":12
+
+				},
+				{
+					"name":"Light Chao",
+					"petID":4,
+					"weight":8
+				},
+				{
+					"name":"Angel Chao",
+					"petID":5,
+					"weight":4					
+				},
+				{
+					"name":"Devil Chao",
+					"petID":6,
+					"weight":4	
+				}
+
+			]
+		},
+		"19":{
+			"name": "poke egg",
+			"hatch": 8,
+			"description":"this egg will hatch a baby pokemon",
+			"drops":
+			[
+				{
+					"name":"Pichu",
+					"petID":7,
+					"weight":35
+
+				},
+				{
+					"name":"Igglypuff",
+					"petID":8,
+					"weight":20
+				},
+				{
+					"name":"Togepi",
+					"petID":9,
+					"weight":20
+				},
+				{
+					"name":"Bonsly",
+					"petID":10,
+					"weight":10
+				},
+				{
+					"name":"Mime Jr.",
+					"petID":11,
+					"weight":5
+				},
+				{
+					"name":"Happiny",
+					"petID":12,
+					"weight":5
+				},
+				{
+					"name":"Mantyke",
+					"petID":13,
+					"weight":5
+				}
+			]
+		}
+	}
+}

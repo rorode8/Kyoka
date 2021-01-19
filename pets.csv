@@ -1,0 +1,14 @@
+petID,name,speed,power,HP,factor,type,source
+1,Normal Chao,5,10,30,10,c,https://i.imgur.com/1frC7ZD.png
+2,Hero Chao,7,14,50,12,c,https://i.imgur.com/Dhvsuac.png
+3,Dark Chao,7,16,40,12,c,https://i.imgur.com/SnjL2Xk.png
+4,Light Chao,12,20,80,20,c,https://i.imgur.com/CUFmS1l.png
+5,Angel Chao,10,20,120,20,c,https://i.imgur.com/WcDPnRm.png
+6,Devil Chao,10,30,80,20,c,https://i.imgur.com/4CDycEY.png
+7,Pichu,20,14,40,12,c,https://img.pokemondb.net/sprites/diamond-pearl/normal/pichu.png
+8,Igglypuff,5,10,30,20,p,https://img.pokemondb.net/sprites/diamond-pearl/normal/igglybuff.png
+9,Togepi,5,10,30,20,p,https://img.pokemondb.net/sprites/diamond-pearl/normal/togepi.png
+10,Bonsly,5,5,140,16,p,https://img.pokemondb.net/sprites/diamond-pearl/normal/bonsly.png
+11,Mime Jr.,10,50,40,10,p,https://img.pokemondb.net/sprites/diamond-pearl/normal/mime-jr.png
+12,Happiny,5,20,200,20,p,https://img.pokemondb.net/sprites/diamond-pearl/normal/happiny.png
+13,Mantyke,12,35,100,15,p,https://img.pokemondb.net/sprites/diamond-pearl/normal/mantyke.png

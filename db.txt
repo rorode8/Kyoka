@@ -1,0 +1,4 @@
+user: rorod8
+pass: mRUHV2XhDp3A(cKc
+dbName: KyokaBot
+Collection: Collection

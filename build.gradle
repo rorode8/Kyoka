@@ -1,0 +1,63 @@
+plugins {
+    id'java'
+    id'application'
+    id'com.github.johnrengelman.shadow' version '4.0.4'
+    id 'maven'
+    
+   
+}
+
+mainClassName = 'Kyoka.Bot'
+
+version '1.0'
+
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+group = 'com.github.jreddit'
+version = '1.0.3-SNAPSHOT'
+
+description = """jReddit"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations.all {
+}
+
+sourceSets.test.resources.srcDirs = ["src/test/resources", "src/test/java"]
+
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+	
+    compile group: 'net.dv8tion', name: 'JDA', version: '4.2.0_181'
+    compile group: 'com.jagrosh', name: 'jda-utilities', version: '3.0.4'
+    compile group: 'me.duncte123', name: 'botCommons', version: '1.0.88'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.3'
+    compile group: 'org.apache.oltu.oauth2', name: 'org.apache.oltu.oauth2.client', version: '1.0.0'
+    compile group: 'com.github.jreddit', name: 'jreddit', version: '1.0.3'
+    compile group: 'com.google.auth', name: 'google-auth-library-oauth2-http', version: '0.21.1'
+    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.5.0.RELEASE'
+    compile 'org.mongodb:mongodb-driver-sync:4.1.1'
+    compile group: 'org.mongodb', name: 'bson', version: '4.1.1'
+    
+    
+    
+    
+}
+
+
+
+
+
+compileJava.options.encoding = 'UTF-8'
+
