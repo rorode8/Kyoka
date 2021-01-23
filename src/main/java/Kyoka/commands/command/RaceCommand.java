@@ -71,7 +71,7 @@ public class RaceCommand implements ICommand {
 		};
 		
 		timer.schedule(task, 60000l);
-		timer.schedule(task1, 25000l);
+		timer.schedule(task1, 35000l);
 		// timer.schedule(task, 30000l);
 
 	}

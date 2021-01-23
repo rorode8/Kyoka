@@ -28,7 +28,7 @@ public class MineCommand implements ICommand {
 
 		if (timeout.containsKey(ctx.getAuthor().getIdLong())) {
 			// wait message
-			ctx.getChannel().sendMessage("you may mine once every 30 seconds").queue();
+			ctx.getChannel().sendMessage("you may mine once every 60 seconds").queue();
 		} else {
 			timeout.put(ctx.getAuthor().getIdLong(), ctx.getAuthor().getIdLong());
 			ctx.getChannel().sendMessage("mining...").queue((message) -> {
@@ -40,7 +40,7 @@ public class MineCommand implements ICommand {
 					
 					
 					if(MongoDB.countItems(ctx.getAuthor().getIdLong(), "bag")<30){
-						message.editMessage(ctx.getAuthor().getAsMention()+" congrats, you found a " + minePull.getString("name")).queueAfter(2,
+						message.editMessage(ctx.getAuthor().getAsMention()+" congrats, you found " + minePull.getString("name")).queueAfter(2,
 								TimeUnit.SECONDS);
 						MongoDB.pushIntoArray("bag", ctx.getAuthor().getIdLong(), minePull);
 						
@@ -48,8 +48,7 @@ public class MineCommand implements ICommand {
 						MongoDB.updateDB(ctx.getAuthor().getIdLong(), Double.valueOf( minePull.getInteger("sell value")));
 						message.editMessage(ctx.getAuthor().getAsMention()+"  you found a " + minePull.getString("name") +" but your inventory is full so it was sold"
 								+ " for: `"+minePull.getInteger("sell value")+"`").queueAfter(2,
-								TimeUnit.SECONDS);
-						
+								TimeUnit.SECONDS);						
 					}
 					
 					
@@ -85,7 +84,7 @@ public class MineCommand implements ICommand {
 				timeout.remove(id, id);
 			}
 		};
-		timer.schedule(task, 30000l);
+		timer.schedule(task, 60000l);
 		
 	}
 

@@ -1,6 +1,8 @@
 package Kyoka.commands.command;
 
+import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +31,7 @@ public class FishCommand implements ICommand {
 
 		if (timeout.containsKey(ctx.getAuthor().getIdLong())) {
 			// wait message
-			ctx.getChannel().sendMessage("you may fish once every 30 seconds").queue();
+			ctx.getChannel().sendMessage("you may fish once every 60 seconds").queue();
 		} else {
 			timeout.put(ctx.getAuthor().getIdLong(), ctx.getAuthor().getIdLong());
 			ctx.getChannel().sendMessage("fishing...").queue((message) -> {
@@ -64,9 +66,11 @@ public class FishCommand implements ICommand {
 		}
 		
 		if(ctx.getAuthor().getId().equals(Kyoka.utils.DataLoader.getString("ownerID"))) {
-
-		
 			
+			System.out.println("gay1");
+			ctx.getChannel().sendMessage("testing").queueAfter(5l, TimeUnit.SECONDS, (message)->{
+				System.out.println("gay2");
+			});
 			
 		}
 
@@ -84,6 +88,10 @@ public class FishCommand implements ICommand {
 		return "to use this command register first \n"
 				+ fish.toString();
 	}
+	
+	public List<String> getAliases(){
+		return Arrays.asList("cast","kkona");
+	}
 
 	private void untime(long id) {
 		TimerTask task = new TimerTask() {
@@ -92,7 +100,7 @@ public class FishCommand implements ICommand {
 				timeout.remove(id, id);
 			}
 		};
-		timer.schedule(task, 30000l);
+		timer.schedule(task, 60000l);
 		
 
 	}

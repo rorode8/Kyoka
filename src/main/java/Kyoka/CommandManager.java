@@ -22,6 +22,7 @@ import Kyoka.commands.command.MineCommand;
 import Kyoka.commands.command.PingCommand;
 import Kyoka.commands.command.RaceCommand;
 import Kyoka.commands.command.RegisterCommand;
+import Kyoka.commands.command.RollCommand;
 import Kyoka.commands.command.STFU4plyCommand;
 import Kyoka.commands.command.SellCommand;
 import Kyoka.commands.command.ShopCommand;
@@ -54,6 +55,7 @@ public class CommandManager {
 		addCommand(new StoreCommand());
 		addCommand(new StorageCommand());
 		addCommand(new ShopCommand());
+		addCommand(new RollCommand());
 		
 		//ensure secret commands are below
 		addCommand(new KickCommand());

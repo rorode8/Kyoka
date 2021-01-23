@@ -1,9 +1,9 @@
 id,name,kgprice,minWeight,maxWeight,luckWeight
 9,nothing,0,1,2,250
-10,rock,1,5,10,300
+10,rocks,1,5,10,300
 11,copper,4,5,10,150
 12,iron,6,5,10,90
 13,gold,25,5,10,40
 14,obsidian,30,8,20,20
-15,diamond,70,15,20,8
+15,diamonds,70,15,20,8
 16,shungite,2000,2,5,3
