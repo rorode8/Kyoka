@@ -1,11 +1,13 @@
 id,name,kgprice,minWeight,maxWeight,luckWeight
-9,nothing,2,2,5,200
+9,nothing,2,2,5,300
 0,Common Carp,2,2,14,60
 1,Bluefish,12,7,9,40
 2,Atlantic Salmon,10,25,30,10
-3,Mahi-mahi,30,20,28,5
-4,Atlantic cod,20,30,45,5
+3,Mahi-mahi,40,20,28,8
+4,Atlantic cod,20,30,45,8
 5,Atlantic mackerel,2,2,4,100
-6,Giant Ocean manta ray,4,1500,1700,2
+6,Giant Ocean manta ray,4,1500,1700,3
 7,Northeren red Snapper,1,40,60,60
 8,Northeren pike,2,14,18,80
+24,Coelacanth,100,20,40,8
+25,Marlin,30,10,40,10

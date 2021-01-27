@@ -111,6 +111,7 @@ public class RaceListener extends ListenerAdapter {
 	    		rb.play();
 	    	}
 	    	
+	    	
 	    	channel.getJDA().removeEventListener(this);
 	    	
 	    	

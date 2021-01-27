@@ -12,13 +12,13 @@ public class RoulettePlayer {
 	private List<Integer> choose;
 	private int multiplier;
 	
-	public RoulettePlayer(long id, String name, double wage, List<Integer> bet, int mult) {
+	public RoulettePlayer(long id, String name, double wage, List<Integer> bet) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.wage = wage;
 		this.choose = bet;
-		this.multiplier = mult;
+		this.multiplier = (36/bet.size());
 	}
 
 	public long getId() {

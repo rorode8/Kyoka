@@ -1,9 +1,13 @@
 id,name,kgprice,minWeight,maxWeight,luckWeight
-9,nothing,0,1,2,250
-10,rocks,1,5,10,300
-11,copper,4,5,10,150
-12,iron,6,5,10,90
-13,gold,25,5,10,40
-14,obsidian,30,8,20,20
-15,diamonds,70,15,20,8
-16,shungite,2000,2,5,3
+9,nothing,0,1,2,300
+10,rocks,1,5,10,350
+11,copper,4,5,10,200
+12,iron,6,5,10,120
+13,gold,25,5,10,55
+14,obsidian,30,8,20,40
+15,diamonds,100,15,20,20
+16,shungite,3000,2,5,8
+20,shit(vtubers),1,1,2,100
+21,suge knight,6000,3,10,2
+22,4ply,-10,1,2,100
+23,ruby,150,10,20,20

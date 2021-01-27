@@ -1,8 +1,11 @@
 package Kyoka.commands.roulette;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Hashtable;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.stream.Collectors;
 
-import Kyoka.commands.race.RaceBuilder;
 import Kyoka.utils.MongoDB;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -13,13 +16,20 @@ public class RouletteListener extends ListenerAdapter{
 	private final long channelId, guildId; // id because keeping the entity would risk cache to become outdated
 	private RouletteManager rm;
 	private TextChannel channel;
+	private Timer timer = new Timer();
+	private Hashtable<Long,Integer> ids;
+	private static final int MINBET=50;
+	
 	
 	public RouletteListener(TextChannel channel, long guildId) {
     	this.channel=channel;
         this.channelId = channel.getIdLong();
         this.guildId = guildId;
+        ids = new Hashtable<Long,Integer>();
 	    //initialize rm
         rm = new RouletteManager(channel);
+        rm.start();
+        this.start();
     }
 	
 	@Override
@@ -29,11 +39,56 @@ public class RouletteListener extends ListenerAdapter{
         if (event.getGuild().getIdLong() != guildId) return;
         String content[] = event.getMessage().getContentRaw().split(" ");
         if(!MongoDB.userExists(event.getAuthor().getIdLong())) return;
+        if(!content[0].equalsIgnoreCase("I!bet") || (content.length!=4 && content.length!=3)) return;
+        int place = content.length;
+        double bet ;
+        try {
+        	bet = (double)Integer.parseInt(content[place-1]);
+        	if(bet<1) {
+        		event.getChannel().sendMessage("hey @everyone we got a smart ass over here").queue();
+        		return;
+        	}
+        	
+        }catch(Exception e) {
+        	event.getChannel().sendMessage("invalid arguments").queue();
+        	return;
+        }
         
+        if(MongoDB.getDoc(event.getAuthor().getIdLong()).getDouble("money")<bet) {
+        	event.getChannel().sendMessage("you're too poor to bet "+bet).queue();
+        	return;
+        }
+        if(ids.contains(event.getAuthor().getIdLong()) && ids.get(event.getAuthor().getIdLong())>2) {
+        	event.getChannel().sendMessage("you can't place more than 3 bets per round").queue();
+        	return;
+        }
+        if(!rm.isBetsOpen()) {
+        	event.getChannel().sendMessage("bets are closed").queue();
+        	return;
+        }
+        if(bet<MINBET) {
+        	event.getChannel().sendMessage("the minimum bet is of "+MINBET).queue();
+        	return;
+        }
+        
+        try {
+        	
+        	if(ids.contains(event.getAuthor().getIdLong())) {
+        		ids.replace(event.getAuthor().getIdLong(), ids.get(event.getAuthor().getIdLong())+1 );
+        	}else {
+        		ids.put(event.getAuthor().getIdLong(), 0);
+        	}
+        	rm.addPlayer(event.getAuthor().getIdLong(), event.getAuthor().getAsMention(), bet, Arrays.stream(parseBet(content)).boxed().collect(Collectors.toList()));
+        	MongoDB.substract(event.getAuthor().getIdLong(), bet);
+        	
+        }catch(Exception e) {
+        	System.out.println(e.getMessage());
+        	channel.sendMessage("invalid format").queue();
+        }
         
 	}
 	
-	@SuppressWarnings("unused")
+	
 	private int[] parseBet(String[] args) throws Exception {
 		int[] ans=null;
 		switch(args[1]) {
@@ -97,7 +152,7 @@ public class RouletteListener extends ListenerAdapter{
 			}else if(args[2].equalsIgnoreCase("2")) {
 				ans = new int[]{19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36};
 			}else {
-				throw new Exception("gay");
+				throw new Exception("invalid half");
 			}
 			break;
 			
@@ -120,4 +175,39 @@ public class RouletteListener extends ListenerAdapter{
 		
 		return numbers;
 	}
+	
+	private void start() {
+		
+			
+		
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				if(rm.sizeP()<1) {
+					//exit
+					Kyoka.commands.command.RouletteCommand.active.remove(guildId);
+					channel.sendMessage("anyone is here? Closing the casino").queue();
+					exitListener();
+					//removing other stuff, gotta re do this shit
+					return;
+				}	
+				
+				rm.play();
+				ids= new Hashtable<Long,Integer>();				
+				start();
+				
+			}
+		};
+		
+		
+		
+		timer.schedule(task, 40000L);
+		
+		
+	}
+	
+	private void exitListener() {
+		channel.getJDA().removeEventListener(this);		
+	}
+	
 }

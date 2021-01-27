@@ -24,7 +24,7 @@ public class TransferCommand implements ICommand{
 		}
 		double amount =0;
 		try {
-			amount = Double.parseDouble(ctx.getArgs().get(1));
+			amount = (double)Integer.parseInt(ctx.getArgs().get(1));
 		}catch(Exception e) {
 			ctx.getChannel().sendMessage("invalid amount").queue();
 			return;
