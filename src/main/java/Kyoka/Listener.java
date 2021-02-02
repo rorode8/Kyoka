@@ -47,23 +47,19 @@ public class Listener extends ListenerAdapter {
 			MongoDB.close();
 		}
 		
-		if(event.getAuthor().getId().equals("155920774778060800") && event.getMessage().getContentRaw().contains("[][][][][][]")) {
-			Member member = event.getGuild().getMemberById(event.getAuthor().getIdLong());
-			VoiceChannel myChannel = member.getVoiceState().getChannel();
+		if(raw.contains("@everyone")) {
+			event.getChannel().sendMessage("<:plupF:677668205212467231> ").queue();
 			
-			//AudioManager audioManager = event.getGuild().getAudioManager();
-			//audioManager.openAudioConnection(myChannel);
-			List<Member> lista = myChannel.getMembers();
-			for(int i=0; i<lista.size(); i++) {
-				lista.get(i).mute(true).queue();
-				//lista.get(i).deafen(true).queue();
-				System.out.println(1+" "+lista.get(i).getNickname());
+		}
+		
+		if(event.getAuthor().getId().equals("155920774778060800") && event.getMessage().getContentRaw().contains("[][][]")) {
+				event.getChannel().sendMessage("<:plupF:677668205212467231> ").queue();
 			}
 			
 
 			
 			
-		}
+		
 		
 		if(event.getAuthor().getId().equals("155920774778060800") && event.getMessage().getContentRaw().contains("[][][][][]")) {
 			Member member = event.getGuild().getMemberById(event.getAuthor().getIdLong());

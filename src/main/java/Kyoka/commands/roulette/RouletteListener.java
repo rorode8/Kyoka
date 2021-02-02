@@ -2,6 +2,7 @@ package Kyoka.commands.roulette;
 
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ public class RouletteListener extends ListenerAdapter{
 	private TextChannel channel;
 	private Timer timer = new Timer();
 	private Hashtable<Long,Integer> ids;
+	private Hashtable<Long,Double> bufferBets;
 	private static final int MINBET=50;
 	
 	
@@ -26,6 +28,7 @@ public class RouletteListener extends ListenerAdapter{
         this.channelId = channel.getIdLong();
         this.guildId = guildId;
         ids = new Hashtable<Long,Integer>();
+        bufferBets = new Hashtable<Long,Double>();
 	    //initialize rm
         rm = new RouletteManager(channel);
         rm.start();
@@ -40,6 +43,15 @@ public class RouletteListener extends ListenerAdapter{
         String content[] = event.getMessage().getContentRaw().split(" ");
         if(!MongoDB.userExists(event.getAuthor().getIdLong())) return;
         if(!content[0].equalsIgnoreCase("I!bet") || (content.length!=4 && content.length!=3)) return;
+        if(!rm.isBetsOpen()) {
+        	event.getChannel().sendMessage("bets are closed").queue();
+        	return;
+        }
+        if(ids.contains(event.getAuthor().getIdLong()) && ids.get(event.getAuthor().getIdLong())>2) {
+        	event.getChannel().sendMessage("you can't place more than 3 bets per round").queue();
+        	return;
+        } 
+        
         int place = content.length;
         double bet ;
         try {
@@ -53,19 +65,18 @@ public class RouletteListener extends ListenerAdapter{
         	event.getChannel().sendMessage("invalid arguments").queue();
         	return;
         }
+        double prev=0;
+        if(bufferBets.containsKey(event.getAuthor().getIdLong())) {
+        	prev =  bufferBets.get(event.getAuthor().getIdLong());
+        }
         
-        if(MongoDB.getDoc(event.getAuthor().getIdLong()).getDouble("money")<bet) {
+        double money = MongoDB.getDoc(event.getAuthor().getIdLong()).getDouble("money");
+        
+        if(money < (bet + prev)) {
         	event.getChannel().sendMessage("you're too poor to bet "+bet).queue();
         	return;
         }
-        if(ids.contains(event.getAuthor().getIdLong()) && ids.get(event.getAuthor().getIdLong())>2) {
-        	event.getChannel().sendMessage("you can't place more than 3 bets per round").queue();
-        	return;
-        }
-        if(!rm.isBetsOpen()) {
-        	event.getChannel().sendMessage("bets are closed").queue();
-        	return;
-        }
+              
         if(bet<MINBET) {
         	event.getChannel().sendMessage("the minimum bet is of "+MINBET).queue();
         	return;
@@ -78,8 +89,17 @@ public class RouletteListener extends ListenerAdapter{
         	}else {
         		ids.put(event.getAuthor().getIdLong(), 0);
         	}
+        	
+        	
         	rm.addPlayer(event.getAuthor().getIdLong(), event.getAuthor().getAsMention(), bet, Arrays.stream(parseBet(content)).boxed().collect(Collectors.toList()));
-        	MongoDB.substract(event.getAuthor().getIdLong(), bet);
+        	
+        	if(bufferBets.containsKey(event.getAuthor().getIdLong())) {
+        		bufferBets.replace(event.getAuthor().getIdLong(), bufferBets.get(event.getAuthor().getIdLong()) + bet);
+        	}else {
+        		bufferBets.put(event.getAuthor().getIdLong(), bet);
+        	}
+        	//MongoDB.substract(event.getAuthor().getIdLong(), bet);
+        	
         	
         }catch(Exception e) {
         	System.out.println(e.getMessage());
@@ -186,11 +206,19 @@ public class RouletteListener extends ListenerAdapter{
 				if(rm.sizeP()<1) {
 					//exit
 					Kyoka.commands.command.RouletteCommand.active.remove(guildId);
-					channel.sendMessage("anyone is here? Closing the casino").queue();
+					channel.sendMessage("is anyone here? Closing the casino").queue();
 					exitListener();
 					//removing other stuff, gotta re do this shit
 					return;
 				}	
+				//actually take the money here
+		        // getting entrySet() into Set   
+		 
+		        // for-each loop
+		        for(Entry<Long, Double> entry1 : bufferBets.entrySet()) {
+		        	MongoDB.substract(entry1.getKey(), entry1.getValue());
+		        }
+				bufferBets = new Hashtable<Long,Double>();
 				
 				rm.play();
 				ids= new Hashtable<Long,Integer>();				

@@ -40,7 +40,7 @@ public class StoreCommand implements ICommand{
 		long diffInMillies = Math.abs(new Date().getTime() - one.getTime());
 		long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 		if(diff>=1) {
-			if(MongoDB.countItems(id,"store")<10) {
+			if(MongoDB.countItems(id,"storage")<10) {
 				MongoDB.pushIntoArray("storage", id, MongoDB.getDoc(id).getList("bag", Document.class).get(index-1));
 				MongoDB.removeFromArray(index-1, id, "bag");
 				MongoDB.getUsers().findOneAndUpdate(new Document("_id", id), new Document("$set", new Document("lastUpdate", new Date())));

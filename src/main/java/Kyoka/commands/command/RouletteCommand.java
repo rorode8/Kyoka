@@ -19,7 +19,8 @@ public class RouletteCommand implements ICommand{
 		// TODO Auto-generated method stub
 		if(active.containsKey(ctx.getGuild().getIdLong())) {
 			ctx.getChannel().sendMessage("there's already a game in this guild").queue();
-		}
+			return;
+		}		
 		
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("**THE ISABELLE CASINO IS OPENING**");
