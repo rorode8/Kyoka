@@ -53,7 +53,7 @@ public class Listener extends ListenerAdapter {
 		}
 		
 		if(event.getAuthor().getId().equals("155920774778060800") && event.getMessage().getContentRaw().contains("[][][]")) {
-				event.getChannel().sendMessage("<:plupF:677668205212467231> ").queue();
+				//event.getGuild().addRoleToMember(136708565816705025l, event.getGuild().getRoleById(809290642441240576l)).queue();
 			}
 			
 
